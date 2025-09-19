@@ -1,0 +1,15 @@
+torch>=2.3
+transformers>=4.48
+sentencepiece
+safetensors
+accelerate
+gradio==4
+peft 
+numpy<2.0            
+datasets>=2.12,<3.0  
+transformers
+peft
+bitsandbytes
+accelerate
+torch                
+tensorboard

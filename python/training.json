@@ -1,0 +1,166 @@
+[
+  {
+    "question": "Create a rule to ensure there are no TODO comments in the code",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)(^|\\\\s)TO\\\\s+DO($|\\\\s|;)\"]\npassOnRegexMatch = false\ndescription = \"Phrase 'to do' remains in the code\""
+  },
+  {
+    "question": "Ensure no SELECT * is used in migrations",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bSELECT\\s+\\\\b\"]\npassOnRegexMatch = false\ndescription = \"Usage of SELECT * is forbidden so that all column references are explicit\""
+  },
+  {
+    "question": "Require a semicolon at the end of each SQL statement",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\";\\s$\"]\npassOnRegexMatch = true\ndescription = \"Ensures each statement ends with a semicolon\""
+  },
+  {
+    "question": "Disallow DROP TABLE statements",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bDROP\\s+TABLE\\b\"]\npassOnRegexMatch = false\ndescription = \"Dropping tables can lead to data loss and must be reviewed\""
+  },
+  {
+    "question": "Prevent UPDATE statements without a WHERE clause",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bUPDATE\\b[\\s\\S]?\\bWHERE\\b\"]\npassOnRegexMatch = true\ndescription = \"Flags UPDATEs missing a WHERE clause to avoid unintended full-table updates\""
+  },
+  {
+    "question": "Ensure migration scripts include a description header comment",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)^--\\sDescription:\\s+.+$\"]\npassOnRegexMatch = true\ndescription = \"Checks for a '-- Description: ...' comment at the top of scripts\""
+  },
+  {
+    "question": "Ban 'GO' batch separators in TSQL migrations",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)^\\sGO\\s$\"]\npassOnRegexMatch = false\ndescription = \"GO separators are not allowed in migrations\""
+  },
+  {
+    "question": "Require IF NOT EXISTS for CREATE TABLE statements",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)CREATE\\s+TABLE(?!\\s+IF\\s+NOT\\s+EXISTS)\"]\npassOnRegexMatch = false\ndescription = \"Ensures tables are created only if they do not already exist\""
+  },
+  {
+    "question": "Disallow SELECT INTO usage",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bSELECT\\s+INTO\\b\"]\npassOnRegexMatch = false\ndescription = \"SELECT INTO can create unintended copies of tables and is prohibited\""
+  },
+  {
+    "question": "Disallow PRINT statements in TSQL migrations",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)^\\sPRINT\\b\"]\npassOnRegexMatch = false\ndescription = \"PRINT statements should not be used in migration scripts\""
+  },
+  {
+    "question": "Ensure COMMIT is present at the end of migration scripts",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)COMMIT;?\\s$\"]\npassOnRegexMatch = true\ndescription = \"Ensures scripts explicitly commit transactions\""
+  },
+  {
+    "question": "Prevent DELETE statements without a WHERE clause",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)\\\\bDELETE\\\\b[\\\\s\\\\S]*?\\\\bWHERE\\\\b\\\"]\\npassOnRegexMatch = true\\ndescription = \\\"Ensures DELETEs include a WHERE clause to avoid unintended full-table deletes\\\""
+  },
+  {
+    "question": "Disallow lowercase SQL keywords",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"\\\\bselect\\\\b|\\\\bupdate\\\\b|\\\\bdelete\\\\b|\\\\binsert\\\\b\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"SQL keywords must be uppercase; lowercase keywords are forbidden\\\""
+  },
+  {
+    "question": "Ban use of NVARCHAR(MAX) in TSQL",
+    "answer": "dialects = [\\\"TSQL\\\"]\\nrules = [\\\"(?i)NVARCHAR\\\\s*\\\\(\\\\s*MAX\\\\s*\\\\)\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"Use of NVARCHAR(MAX) is disallowed; specify a maximum length instead\\\""
+  },
+  {
+    "question": "Prevent use of CURSOR declarations",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)\\\\bDECLARE\\\\s+[^;]*?CURSOR\\\\b\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"Cursor usage is discouraged; use set-based operations instead\\\""
+  },
+  {
+    "question": "Enforce IX_ prefix on index names",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)CREATE\\\\s+INDEX\\\\s+IX_[A-Za-z0-9_]+\\\"]\\npassOnRegexMatch = true\\ndescription = \\\"Ensures indexes follow the IX_ naming convention\\\""
+  },
+  {
+    "question": "Require explicit schema prefix on table references",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)\\\\bFROM\\\\s+\\\\w+\\\\.\\\"]\\npassOnRegexMatch = true\\ndescription = \\\"Ensures table references include an explicit schema prefix\\\""
+  },
+  {
+    "question": "Disallow cross-database object references",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)\\\\w+\\\\.[A-Za-z0-9_]+\\\\.[A-Za-z0-9_]+\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"Cross-database queries are not allowed in migrations\\\""
+  },
+  {
+    "question": "Ensure SET NOCOUNT ON in TSQL scripts",
+    "answer": "dialects = [\\\"TSQL\\\"]\\nrules = [\\\"(?i)^\\\\s*SET\\\\s+NOCOUNT\\\\s+ON\\\\b\\\"]\\npassOnRegexMatch = true\\ndescription = \\\"Ensures SET NOCOUNT ON is present to reduce message output\\\""
+  },
+  {
+    "question": "Ban RAISERROR usage in TSQL",
+    "answer": "dialects = [\\\"TSQL\\\"]\\nrules = [\\\"(?i)\\\\bRAISERROR\\\\b\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"Use of RAISERROR is discouraged; use THROW instead\\\""
+  },
+  {
+    "question": "Disallow GETDATE() in migrations",
+    "answer": "dialects = [\\\"TEXT\\\"]\\nrules = [\\\"(?i)\\\\bGETDATE\\\\s*\\\\(\\\\s*\\\\)\\\\b\\\"]\\npassOnRegexMatch = false\\ndescription = \\\"Avoid GETDATE(); use parameterized dates for deterministic migrations\\\""
+  },
+  {
+    "question": "Disallow TRUNCATE TABLE statements",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bTRUNCATE\\s+TABLE\\b\"]\npassOnRegexMatch = false\ndescription = \"TRUNCATE TABLE is forbidden to prevent unlogged data loss\""
+  },
+  {
+    "question": "Ban WAITFOR DELAY usage in migrations",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)\\bWAITFOR\\s+DELAY\\b\"]\npassOnRegexMatch = false\ndescription = \"WAITFOR DELAY can stall deployments and is disallowed\""
+  },
+  {
+    "question": "Require BEGIN TRANSACTION at the start of each script",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)^(?!.*BEGIN\\s+TRANSACTION)\\\\s*\"]\npassOnRegexMatch = true\ndescription = \"Ensures each migration starts with BEGIN TRANSACTION\""
+  },
+  {
+    "question": "Disallow ALTER TABLE DROP COLUMN statements",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bALTER\\s+TABLE\\s+[^;]+\\s+DROP\\s+COLUMN\\b\"]\npassOnRegexMatch = false\ndescription = \"Dropping columns directly is prohibited to avoid data loss\""
+  },
+  {
+    "question": "Prevent use of sp_executesql for dynamic SQL",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)\\bsp_executesql\\b\"]\npassOnRegexMatch = false\ndescription = \"Dynamic SQL via sp_executesql is not allowed; use parameterized scripts instead\""
+  },
+  {
+    "question": "Require SET ANSI_NULLS ON in TSQL scripts",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)^(?!.*SET\\s+ANSI_NULLS\\s+ON)\\\\s*\"]\npassOnRegexMatch = true\ndescription = \"Ensures SET ANSI_NULLS ON is configured for predictable null comparisons\""
+  },
+  {
+    "question": "Require SET QUOTED_IDENTIFIER ON in TSQL scripts",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)^(?!.*SET\\s+QUOTED_IDENTIFIER\\s+ON)\\\\s*\"]\npassOnRegexMatch = true\ndescription = \"Ensures SET QUOTED_IDENTIFIER ON for proper identifier handling\""
+  },
+  {
+    "question": "Disallow NOLOCK table hints",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bNOLOCK\\b\"]\npassOnRegexMatch = false\ndescription = \"NOLOCK hints can cause dirty reads and are forbidden\""
+  },
+  {
+    "question": "Prevent CROSS JOIN usage",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bCROSS\\s+JOIN\\b\"]\npassOnRegexMatch = false\ndescription = \"CROSS JOINs can produce large Cartesian products and are disallowed\""
+  },
+  {
+    "question": "Enforce FK_ prefix on foreign key constraint names",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)CREATE\\s+CONSTRAINT\\s+(?!FK_[A-Za-z0-9_]+)\\w+\\s+FOREIGN\\s+KEY\\b\"]\npassOnRegexMatch = false\ndescription = \"Foreign key constraints must be named with FK_ prefix\""
+  },
+  {
+    "question": "Disallow DATETIME without precision, require DATETIME2",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bDATETIME\\b(?!2)\\b\"]\npassOnRegexMatch = false\ndescription = \"Use DATETIME2 instead of DATETIME for better precision\""
+  },
+  {
+    "question": "Prevent SET IDENTITY_INSERT ON",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)\\bSET\\s+IDENTITY_INSERT\\s+\\w+\\s+ON\\b\"]\npassOnRegexMatch = false\ndescription = \"IDENTITY_INSERT ON can corrupt identity sequences and is forbidden\""
+  },
+  {
+    "question": "Ensure named CHECK constraints follow pattern CK_",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)CREATE\\s+CONSTRAINT\\s+(?!CK_[A-Za-z0-9_]+)\\w+\\s+CHECK\\b\"]\npassOnRegexMatch = false\ndescription = \"CHECK constraints must be named with CK_ prefix\""
+  },
+  {
+    "question": "Disallow EXEC with string literal dynamic SQL",
+    "answer": "dialects = [\"TSQL\"]\nrules = [\"(?i)\\bEXEC\\s*\\(\\s*'[^']+'\\s*\\)\"]\npassOnRegexMatch = false\ndescription = \"Dynamic EXEC with string literals is forbidden; use parameterized calls\""
+  },
+  {
+    "question": "Require version header comment in each migration",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)^--\\s*Version:\\s*\\d+\\.\\d+$\"]\npassOnRegexMatch = true\ndescription = \"Each script must start with a '-- Version: X.Y' header\""
+  },
+  {
+    "question": "Disallow FIXME comments in code",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)FIXME\"]\npassOnRegexMatch = false\ndescription = \"FIXME comments must be removed before committing migrations\""
+  },
+  {
+    "question": "Prevent trailing whitespace at end of lines",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"[ \\t]+$\"]\npassOnRegexMatch = false\ndescription = \"Removes unnecessary trailing whitespace\""
+  },
+  {
+    "question": "Disallow tab characters for indentation",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"\\t\"]\npassOnRegexMatch = false\ndescription = \"Tabs are forbidden; use spaces for indentation\""
+  },
+  {
+    "question": "Disallow USE database statements",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bUSE\\s+\\[?\\w+\\]?\\b\"]\npassOnRegexMatch = false\ndescription = \"Explicit USE statements are not allowed in migration scripts\""
+  },
+  {
+    "question": "Prevent references to sys schema objects",
+    "answer": "dialects = [\"TEXT\"]\nrules = [\"(?i)\\bsys\\.[A-Za-z0-9_]+\\b\"]\npassOnRegexMatch = false\ndescription = \"Direct queries against sys schema are disallowed in migrations\""
+  }
+]

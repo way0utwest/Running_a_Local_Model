@@ -10,8 +10,7 @@ pip install -r requirements.txt
 ## training
 python train.py
 
-
-wait a lot
+_wait a lot_
 
 # run
 

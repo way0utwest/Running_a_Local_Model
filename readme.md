@@ -17,3 +17,4 @@ The intro.md file contains the code to run this demo. This can be slow, so be aw
 Use Anthony Notencino's setup for Docker here: [ollama-sql-faststart](https://github.com/nocentino/ollama-sql-faststart). This starts a number of containers and manages the security setup.
 
 This can be slow, so do not look to this for production work, but it is a way to quickly get moving with a setup.
+

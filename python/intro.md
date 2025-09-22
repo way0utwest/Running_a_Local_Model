@@ -1,4 +1,7 @@
 # Training and Running a Python Model
+Resources: [Fine Tuning a Small Language Model](https://fffej.substack.com/p/fine-tuning-a-small-language-model)
+
+## Setup
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
@@ -12,4 +15,4 @@ wait a lot
 
 # run
 
-ython train.py --eval
+python train.py --eval
